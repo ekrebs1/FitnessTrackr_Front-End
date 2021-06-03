@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 export default function App() {
   return (
     <Switch>
-      <Redirect exact from='/' to='/about' />
+      <Redirect exact from='/' to='/home' />
       <Route
         exact
         path='/:page?'
