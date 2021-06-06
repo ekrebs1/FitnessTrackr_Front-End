@@ -17,13 +17,15 @@ const Register = () => {
       .then(({ data: { token } }) => {
         if (token) {
           localStorage.setItem("token", JSON.stringify(token));
-          window.location.href = `${window.location.origin}/Home`;
+          window.location.href = `${window.location.origin}/home`;
         } else {
           setErrorMessage("Something went horribly wrong");
           // show some error message
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
+
         setErrorMessage("Something went horribly wrong");
         // set some error message
       });
