@@ -1,6 +1,13 @@
 import React from "react";
 import { Tabs, Tab, AppBar } from "@material-ui/core";
-import { Routines, Home, MyRoutines, Activities, Login } from ".";
+import {
+  Routines,
+  Home,
+  MyRoutines,
+  Activities,
+  Login,
+  Register,
+} from "./components";
 
 const Navigation = (props) => {
   const { match, history } = props;
@@ -10,9 +17,10 @@ const Navigation = (props) => {
   const tabNameToIndex = {
     0: "home",
     1: "routines",
-    2: "my routines",
+    2: "my-routines",
     3: "activities",
     4: "login",
+    5: "register",
   };
 
   const indexToTabName = {
@@ -21,6 +29,7 @@ const Navigation = (props) => {
     myRoutines: 2,
     activities: 3,
     login: 4,
+    register: 5,
   };
 
   const [selectedTab, setSelectedTab] = React.useState(indexToTabName[page]);
@@ -39,6 +48,7 @@ const Navigation = (props) => {
           <Tab label='My Routines' />
           <Tab label='Activities' />
           <Tab label='Login' />
+          <Tab label='Register' />
         </Tabs>
       </AppBar>
       {selectedTab === 0 && <Home />}
@@ -46,6 +56,7 @@ const Navigation = (props) => {
       {selectedTab === 2 && <MyRoutines />}
       {selectedTab === 3 && <Activities />}
       {selectedTab === 4 && <Login />}
+      {selectedTab === 5 && <Register />}
     </>
   );
 };
