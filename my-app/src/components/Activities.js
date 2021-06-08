@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { getActivities } from "../api";
 import {
   Paper,
   TableContainer,
@@ -15,14 +14,14 @@ const Activities = () => {
   const [activities, setActivities] = useState();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}/activities`)
-      .then(({ data }) => {
-        if (data.length) {
-          setActivities(data);
-        }
-      });
-  }, []);
+    //getActivities() from api
+    getActivities(activities).then((data) => {
+      if (data.length) {
+        setActivities(data);
+      }
+    });
+  }, [activities]);
+
   return (
     <>
       <h1>Activities Page</h1>

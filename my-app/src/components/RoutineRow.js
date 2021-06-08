@@ -5,13 +5,12 @@ import {
   Save as SaveIcon,
   Delete as DeleteIcon,
 } from "@material-ui/icons";
-//import axios from "axios";
+import { deleteRoutine, saveRoutine } from "../api";
 
 const RoutineRow = ({
   routine: { id, name, goal, creatorName, isPublic },
   onRemoveRoutine,
 }) => {
-  const myToken = JSON.parse(localStorage.getItem("token"));
   const [routineName, setRoutineName] = useState(name);
   const [routineGoal, setRoutineGoal] = useState(goal);
   const [editMode, setEditMode] = useState(false);
@@ -20,40 +19,14 @@ const RoutineRow = ({
     setEditMode(true);
   };
 
-  const onSave = (id) => {
+  const onSave = () => {
+    saveRoutine(routineName, routineGoal, id);
     setEditMode(false);
-    fetch(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}/MyRoutines/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${myToken}`,
-      },
-      body: JSON.stringify({
-        name: routineName,
-        goal: routineGoal,
-      }),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch(console.error);
   };
 
-  const onDelete = (id) => {
+  const onDelete = () => {
+    deleteRoutine(id);
     onRemoveRoutine();
-    fetch(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}/MyRoutines/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${myToken}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch(console.error);
   };
 
   return (
@@ -101,6 +74,7 @@ const RoutineRow = ({
       </TableCell>
       <TableCell align='right'>
         <DeleteIcon
+          style={{ cursor: "pointer" }}
           onClick={() => {
             onDelete(id);
           }}

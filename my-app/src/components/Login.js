@@ -1,44 +1,20 @@
+//post error message on login
 import { Button, TextField } from "@material-ui/core";
 import { useState } from "react";
-
-import axios from "axios";
+import { loginUser } from "../api";
 
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [errorMessage, setErrorMessage] = useState();
-
-  const loginUser = async () => {
-    return await axios
-      .post(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}users/login`, {
-        username,
-        password,
-      })
-      .then(({ data: { token } }) => {
-        if (token) {
-          localStorage.setItem("token", JSON.stringify(token));
-          window.location.href = `${window.location.origin}/Home`;
-        } else {
-          setErrorMessage("Something went wrong");
-          // show some error message
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-
-        setErrorMessage("Something went wrong");
-        // set some error message
-      });
-  };
+  // const [errorMessage, setErrorMessage] = useState("error");
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    loginUser();
+    loginUser(username, password);
   };
 
   return (
     <>
-      {errorMessage}
       <form noValidate autoComplete='off' onSubmit={onFormSubmit}>
         <TextField
           id='username'
