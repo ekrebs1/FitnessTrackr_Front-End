@@ -1,6 +1,5 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import CreateRoutine from "./CreateRoutine";
-import { getRoutines } from "../api";
 
 import {
   Paper,
@@ -11,22 +10,23 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
+// import { ReplyOutlined } from "@material-ui/icons";
 
 const Routines = () => {
   const [routines, setRoutines] = useState();
 
   useEffect(() => {
-    getRoutines(routines).then((data) => {
-      if (data.length) {
-        setRoutines(data);
-      }
-    });
-  }, [routines]);
-
+    axios
+      .get(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}routines`)
+      .then(({ data }) => {
+        if (data.length) {
+          setRoutines(data);
+        }
+      });
+  }, []);
   return (
     <>
       <h1>Routines Page</h1>
-      <CreateRoutine />
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

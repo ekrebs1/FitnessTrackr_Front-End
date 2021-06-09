@@ -120,31 +120,31 @@ export async function createRoutine(name, goal) {
   }
 }
 
-// export async function createActivity(name, description) {
-//   try {
-//     const myToken = JSON.parse(localStorage.getItem("token"));
+export async function createActivity(name, description) {
+  try {
+    const myToken = JSON.parse(localStorage.getItem("token"));
 
-//     const response = await fetch(
-//       `${process.env.REACT_APP_FITNESS_TRACKR_API_URL}activities`,
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           Authorization: `Bearer ${myToken}`,
-//         },
-//         body: JSON.stringify({
-//           name,
-//           description,
-//         }),
-//       }
-//     );
+    const response = await fetch(
+      `${process.env.REACT_APP_FITNESS_TRACKR_API_URL}activities`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${myToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          description,
+        }),
+      }
+    );
 
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 //GOOD
 export async function deleteRoutine(id) {
@@ -267,4 +267,23 @@ export async function saveRoutine(routineName, routineGoal, id) {
       console.log(result);
     })
     .catch(console.error);
+}
+
+export async function routineActivities(id) {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_FITNESS_TRACKR_API_URL}activities/:activityId/routines`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const { data } = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }

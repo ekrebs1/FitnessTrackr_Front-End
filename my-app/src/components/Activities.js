@@ -9,6 +9,7 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
+import CreateActivity from "./CreateActivities";
 
 const Activities = () => {
   const [activities, setActivities] = useState();
@@ -24,7 +25,7 @@ const Activities = () => {
 
   return (
     <>
-      <h1>Activities Page</h1>
+      <CreateActivity />
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

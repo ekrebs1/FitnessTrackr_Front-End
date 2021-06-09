@@ -8,18 +8,18 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
-import { createRoutine } from "../api";
+import { createActivity } from "../api";
 
-const CreateRoutine = () => {
-  const [routineName, setRoutineName] = useState("");
-  const [routineGoal, setRoutineGoal] = useState("");
+const CreateActivity = () => {
+  const [activityName, setActivityName] = useState("");
+  const [activityDescription, setActivityDescription] = useState("");
 
   //From API
-  createRoutine();
+  createActivity();
 
   const onFormSubmit = (event) => {
     event.preventDefault();
-    createRoutine(routineName, routineGoal);
+    createActivity(activityName, activityDescription);
   };
 
   const useStyles = makeStyles((theme) => ({
@@ -70,7 +70,7 @@ const CreateRoutine = () => {
             component='h2'
             align='center'
             gutterBottom>
-            My Routines
+            Activities
           </Typography>
           <form
             noValidate
@@ -86,7 +86,7 @@ const CreateRoutine = () => {
               color='#F9DDD2'
               defaultValue='Name'
               onInput={(event) => {
-                setRoutineName(event.target.value);
+                setActivityName(event.target.value);
               }}
             />
             <TextField
@@ -96,9 +96,9 @@ const CreateRoutine = () => {
               label='Required'
               variant='outlined'
               color='#F9DDD2'
-              defaultValue='Goal'
+              defaultValue='Description'
               onInput={(event) => {
-                setRoutineGoal(event.target.value);
+                setActivityDescription(event.target.value);
               }}
             />
             <Button
@@ -115,4 +115,4 @@ const CreateRoutine = () => {
     </>
   );
 };
-export default CreateRoutine;
+export default CreateActivity;
