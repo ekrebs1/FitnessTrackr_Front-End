@@ -26,7 +26,7 @@ const Login = ({ setAuth }) => {
           if (token) {
             localStorage.setItem("token", token);
             setAuth(true);
-            window.location.href = "/home";
+            // window.location.href = "/home";
           }
         });
     } catch (error) {
