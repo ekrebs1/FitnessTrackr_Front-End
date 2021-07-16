@@ -1,17 +1,25 @@
-import React from "react";
-import "./styles.css";
-import Navigation from "./Navigation";
-import { Route, Switch, Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import Navigation from "./components/Navigation/Navigation";
+import Pages from "./components/Pages/Pages";
 
-export default function App() {
+function App() {
+  const [auth, setAuth] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    token ? setAuth(true) : setAuth(false);
+  }, []);
+
   return (
-    <Switch>
-      <Redirect exact from='/' to='/home' />
-      <Route
-        exact
-        path='/:page?'
-        render={(props) => <Navigation {...props} />}
-      />
-    </Switch>
+    <div>
+      <header>
+        <Navigation auth={auth} setAuth={setAuth} />
+      </header>
+      <main>
+        <Pages auth={auth} setAuth={setAuth} />
+      </main>
+    </div>
   );
 }
+
+export default App;

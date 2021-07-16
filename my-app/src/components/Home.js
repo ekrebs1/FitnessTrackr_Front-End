@@ -1,4 +1,6 @@
 import { Typography, Container, makeStyles } from "@material-ui/core";
+import { LOGIN_ROUTE } from "../constants";
+import { REGISTER_ROUTE } from "../constants";
 
 const Home = () => {
   const useStyles = makeStyles((theme) => ({
@@ -58,7 +60,10 @@ const Home = () => {
             component='h2'
             align='center'
             gutterBottom>
-            Please login to your account or register to start tracking!
+            Please
+            <a href={LOGIN_ROUTE}> login</a> to your account or
+            <a href={REGISTER_ROUTE}> register </a>
+            to start tracking!
           </Typography>
         </Container>
       </div>

@@ -7,19 +7,36 @@ import {
   Container,
   makeStyles,
 } from "@material-ui/core";
+import axios from "axios";
 import { useState } from "react";
-import { registerUser } from "../api";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
-const Register = () => {
+const Register = ({ setAuth }) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  // const [errorMessage, setErrorMessage] = useState();
+  const [error, setError] = useState("");
 
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-    registerUser(username, password);
-  };
+  async function handleRegister(username, password) {
+    try {
+      await axios
+        .post(
+          `${process.env.REACT_APP_FITNESS_TRACKR_API_URL}/users/register`,
+          {
+            username,
+            password,
+          }
+        )
+        .then(({ data: { token } }) => {
+          if (token) {
+            localStorage.setItem("token", token);
+            setAuth(true);
+            window.location.href = "/home";
+          }
+        });
+    } catch (error) {
+      setError("Username in use!");
+    }
+  }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -82,17 +99,25 @@ const Register = () => {
         <form
           noValidate
           autoComplete='off'
-          onSubmit={onFormSubmit}
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (password.length < 8) {
+              setError("Password must be at least 8 characters long.");
+            } else {
+              handleRegister(username, password);
+            }
+          }}
           className={classes.form}>
+          {error}
           <TextField
             className={classes.textField}
             required
             id='outlined-required'
-            label='Required'
+            label='Username'
             variant='outlined'
             color='#F9DDD2'
-            defaultValue='Username'
-            onInput={(event) => {
+            value={username}
+            onChange={(event) => {
               setUsername(event.target.value);
             }}
           />
@@ -100,11 +125,10 @@ const Register = () => {
             className={classes.textField}
             id='outlined-required'
             type='password'
-            label='Required'
+            label='Password'
             variant='outlined'
-            //color='secondary'
-            defaultValue='Password'
-            onInput={(event) => {
+            value={password}
+            onChange={(event) => {
               setPassword(event.target.value);
             }}
           />

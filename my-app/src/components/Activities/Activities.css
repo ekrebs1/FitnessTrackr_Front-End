@@ -1,0 +1,37 @@
+.Add-Activity-Form-Container {
+  max-height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Activity-Card-Container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 25%;
+  justify-content: center;
+}
+
+.Activity-Card {
+  max-height: 300px;
+  width: 300px;
+  margin: 10px;
+}
+
+.Activity-Card-Content {
+  background-color: #79aeb2;
+
+}
+
+.Add-Activity-Form {
+  display: flex;
+}
+
+.Activity-Input > * {
+  margin: 10px;
+  padding: 5px;
+}
+
+.Error-Message {
+  margin: 0px 15px;
+}

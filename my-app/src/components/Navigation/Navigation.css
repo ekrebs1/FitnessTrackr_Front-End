@@ -1,0 +1,14 @@
+.Nav-Link {
+  color: white;
+  text-decoration: none;
+  padding: 30px;
+  text-align: center;
+}
+
+.NavBar {
+  background-color: #79aeb2;
+  min-width: 675px;
+}
+.Nav-Links {
+  flex-grow: 1;
+}

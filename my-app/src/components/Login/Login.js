@@ -8,40 +8,31 @@ import {
 } from "@material-ui/core";
 import axios from "axios";
 import { useState } from "react";
-//import { loginUser } from "../api";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 
-const Login = () => {
+const Login = ({ setAuth }) => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const loginUser = async () => {
-    return await axios
-      .post(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}users/login`, {
-        username,
-        password,
-      })
-      .then(({ data: { token } }) => {
-        if (token) {
-          localStorage.setItem("token", JSON.stringify(token));
-          window.location.href = `${window.location.origin}/home`;
-        } else {
-          setErrorMessage("Incorrect Login");
-          // show some error message
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-
-        setErrorMessage("Incorrect Login");
-        // set some error message
-      });
-  };
-  const onFormSubmit = (event) => {
-    event.preventDefault();
-    loginUser(username, password);
-  };
+  async function handleLogin(username, password) {
+    try {
+      await axios
+        .post(`${process.env.REACT_APP_FITNESS_TRACKR_API_URL}/users/login`, {
+          username,
+          password,
+        })
+        .then(({ data: { token } }) => {
+          if (token) {
+            localStorage.setItem("token", token);
+            setAuth(true);
+            window.location.href = "/home";
+          }
+        });
+    } catch (error) {
+      setError("Error logging in, please try again");
+    }
+  }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,11 +92,14 @@ const Login = () => {
           gutterBottom>
           Please log in to your account.
         </Typography>
-        {errorMessage}
+        {error}
         <form
           noValidate
           autoComplete='off'
-          onSubmit={onFormSubmit}
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleLogin(username, password);
+          }}
           className={classes.form}>
           <TextField
             className={classes.textField}
@@ -115,11 +109,12 @@ const Login = () => {
             variant='outlined'
             color='#F9DDD2'
             defaultValue='Required'
-            onInput={(event) => {
+            onChange={(event) => {
               setUsername(event.target.value);
             }}
           />
           <TextField
+            required
             className={classes.textField}
             id='outlined-required'
             type='password'
@@ -127,7 +122,7 @@ const Login = () => {
             variant='outlined'
             //color='secondary'
             defaultValue='Password'
-            onInput={(event) => {
+            onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
